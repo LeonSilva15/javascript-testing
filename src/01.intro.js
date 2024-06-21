@@ -25,3 +25,18 @@ export function fizzBuzz(num) {
     }
     return num.toString();
 }
+
+/**
+ * Get the average of the numbers in the array
+ * @param {Array<number>} numsArr 
+ * @returns average of the numbers in the array
+ */
+export function calculateAverage(numsArr) {
+    if(numsArr.length === 0) {
+        return NaN;
+    }
+
+    return numsArr.reduce((num1, num2) => {
+        return num1 + num2;
+    }, 0) / numsArr.length;
+}
