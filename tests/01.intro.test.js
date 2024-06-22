@@ -17,3 +17,17 @@ describe(max, () => {
         expect(max(1, 2)).toBe(2);
     });
 });
+
+describe('fizzBuzz', () => {
+    it('should return FizzBuzz if the number is divisible by 3 and 5', () => {
+        expect(fizzBuzz(15)).toBe('FizzBuzz');
+    });
+
+    it('should return Fizz if the number is only divisible by 3', () => {
+        expect(fizzBuzz(6)).toBe('Fizz');
+    });
+
+    it('should return Buzz if the number is divisible by 5', () => {
+        expect(fizzBuzz(50)).toBe('Buzz');
+    });
+});
