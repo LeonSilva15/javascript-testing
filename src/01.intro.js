@@ -40,3 +40,18 @@ export function calculateAverage(numsArr) {
         return num1 + num2;
     }, 0) / numsArr.length;
 }
+
+/**
+ * Get the factorial of any number
+ * @param {number} num base number to get the factorial from
+ * @returns factorial number
+ */
+export function factorial(num) {
+    if(num < 0) {
+        return undefined;
+    }
+    if(num === 0 || num === 1) {
+        return 1;
+    }
+    return num * factorial( num - 1 );
+}
