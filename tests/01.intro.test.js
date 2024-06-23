@@ -31,3 +31,21 @@ describe('fizzBuzz', () => {
         expect(fizzBuzz(50)).toBe('Buzz');
     });
 });
+
+describe('calculateAverage', () => {
+    it('should return NaN if given an empty array', () => {
+        expect(calculateAverage([])).toBeNaN();
+    });
+
+    it('should return the same number if there is only one element in the array', () => {
+        expect(calculateAverage([2])).toBe(2);
+    });
+
+    it('should return the average of two elements in the array', () => {
+        expect(calculateAverage([1, 2])).toBe(1.5);
+    });
+
+    it('should return the average of five elements in the array', () => {
+        expect(calculateAverage([1, 2, 3, 4, 5, 6])).toBe(3.5);
+    });
+});
