@@ -49,3 +49,25 @@ describe('calculateAverage', () => {
         expect(calculateAverage([1, 2, 3, 4, 5, 6])).toBe(3.5);
     });
 });
+
+describe('factorial', () => {
+    it('should return undefined if given less than 0', () => {
+        expect(factorial(-1)).toBeUndefined;
+    });
+
+    it('should return 1 if given 0', () => {
+        expect(factorial(0)).toBe(1);
+    });
+
+    it('should return 1 if given 1',() => {
+        expect(factorial(1)).toBe(1);
+    });
+
+    it('should return 2 if given 2', () => {
+        expect(factorial(2)).toBe(2);
+    });
+
+    it('should return 720 if given 6', () => {
+        expect(factorial(6)).toBe(720);
+    });
+});
