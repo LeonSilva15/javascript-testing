@@ -13,5 +13,17 @@ describe('test suite', () => {
         // Validating the type of an attribute
         expect(typeof obj.name).toBe('string');
     });
+
+    it('should avoid loose assertions', () => {
+        const str = 'The requested file was not found.';
+        // Loose assertion - Too general
+        expect(str).toBeDefined(); // Easily true
+        // Tight assertion - Too specific
+        expect(str).toBe('The requested file was not found.'); // Easily false
+        // Better assertion
+        expect(str).toMatch('not found');
+        // Even better assertion
+        expect(str).toMatch(/not found/i);
+    });
 });
 
