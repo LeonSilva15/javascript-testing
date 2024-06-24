@@ -25,5 +25,18 @@ describe('test suite', () => {
         // Even better assertion
         expect(str).toMatch(/not found/i);
     });
+
+    it('should prefer better assertions', () => {
+        const myArr = [1, 2, 3];
+        // Loose
+        expect(myArr).toBeDefined();
+        // Tight
+        expect(myArr).toBeDefined([1, 2, 3]);
+        // Better
+        expect(myArr).toEqual(expect.arrayContaining([1, 2, 3]));
+        // Sometimes we need loose or tight tests
+        expect(myArr).toHaveLength(3);
+        expect(myArr.length).toBeGreaterThan(0);
+    });
 });
 
