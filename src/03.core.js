@@ -33,3 +33,26 @@ export function calculateDiscount(price, discountCode) {
 
     return price - price * discount;
 }
+
+export const MIN_USERNAME_LENGTH = 3;
+export const MIN_AGE = 18;
+export const MAX_AGE = 80;
+/**
+ * Validate the user data
+ * @param {string} username 
+ * @param {number} age 
+ * @returns {boolean | string} whether the data is valid or not
+ */
+export function validateUserInput(username, age) {
+    let errors = [];
+
+    if (typeof username !== 'string' || username.length < MIN_USERNAME_LENGTH) {
+        errors.push('Invalid username');
+    }
+
+    if (typeof age !== 'number' || age < MIN_AGE || age > MAX_AGE) {
+        errors.push('Invalid age');
+    }
+
+    return errors.length === 0 ? 'Validation successful' : errors.join(', ');
+}
