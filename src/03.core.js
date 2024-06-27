@@ -109,3 +109,18 @@ export function canDrive(age, countryCode) {
 
     return age >= legalDrivingAge[countryCode];
 }
+
+/**
+ * Fetch the array of numbers
+ * @returns {Promise<array<number>>} promise that resolves to an array of numbers
+ */
+export function fetchData() {
+    // return [1,2,3];
+
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            const data = [1, 2, 3];
+            resolve(data);
+        });
+    });
+}
