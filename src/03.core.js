@@ -82,3 +82,30 @@ export function isValidUsername(username) {
   
     return username.length >= minLength && username.length <= maxLength;
 }
+
+/**
+ * Validate if the age is allowed to drive in the country
+ * @param {number} age 
+ * @param {string} countryCode 
+ * @returns {boolean} wheter the age is allowed to drive or not in the country
+ */
+export function canDrive(age, countryCode) {
+    // Avoid defensive programming
+    // Assuming this data has already been validated before, there's no need
+    // Only validate this when receiving data for the first time
+    // to validate it again
+    // if(typeof age !== 'number') {
+    //     return 'Error!'
+    // }
+
+    const legalDrivingAge = {
+      US: 16,
+      UK: 17,
+    };
+
+    if (!legalDrivingAge[countryCode]) {
+      return 'Invalid country code';
+    }
+
+    return age >= legalDrivingAge[countryCode];
+}
