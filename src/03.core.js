@@ -132,3 +132,69 @@ export function fetchData() {
 export function failFetchData() {
     return Promise.reject({reason: 'Operation failed'});
 }
+
+/**
+ * Class to represent the Stack object with the FILO methods
+ */
+export class Stack {
+    /**
+     * Create a new stack with a empty items list
+     */
+    constructor() {
+        /** @private */
+        this.items = [];
+    }
+
+    /**
+     * Add a new item to the items list
+     * @param {any} item 
+     */
+    push(item) {
+        this.items.push(item);
+    }
+
+    /**
+     * Get (and remove) the last item of the stack
+     * @returns {any} last item of the stack
+     */
+    pop() {
+        if (this.isEmpty()) {
+            throw new Error('Stack is empty');
+        }
+          return this.items.pop();
+    }
+
+    /**
+     * Get (and preserve in the items) the last item of the stack
+     * @returns {any} last item of the stack
+     */
+    peek() {
+        if (this.isEmpty()) {
+            throw new Error('Stack is empty');
+        }
+        return this.items[this.items.length - 1];
+    }
+
+    /**
+     * Validate if the stack is empty
+     * @returns {boolean} whether the stack is empty or not
+     */
+    isEmpty() {
+        return this.items.length === 0;
+    }
+
+    /**
+     * Get the size of the items lsit
+     * @returns {number} size of items list
+     */
+    size() {
+        return this.items.length;
+    }
+
+    /**
+     * Removes all the items in the items lsit
+     */
+    clear() {
+        this.items = [];
+    }
+}
