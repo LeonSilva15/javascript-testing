@@ -124,3 +124,11 @@ export function fetchData() {
         });
     });
 }
+
+/**
+ * Get a promise rejection
+ * @returns {Promise.reject} rejected promise
+ */
+export function failFetchData() {
+    return Promise.reject({reason: 'Operation failed'});
+}
