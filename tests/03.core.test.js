@@ -1,7 +1,11 @@
 import { describe, it, expect } from "vitest";
 import {
     getCoupons,
-    calculateDiscount
+    calculateDiscount,
+    validateUserInput,
+    MIN_USERNAME_LENGTH,
+    MIN_AGE,
+    MAX_AGE
 } from "../src/03.core";
 
 describe('getCoupons', () => {
@@ -86,5 +90,34 @@ describe('calculateDiscount', () => {
 
         const newPrice3 = calculateDiscount(10, 'SAVE20');
         expect(newPrice3).toBe(8);
+    });
+});
+
+describe('validateUserInput', () => {
+    it('should handle non-string username', () => {
+        expect(validateUserInput(123, 20)).toMatch(/invalid username/i);
+    });
+
+    it('should handle too short username', () => {
+        const name = 'a'.repeat(MIN_USERNAME_LENGTH - 1);
+        expect(validateUserInput(name, 20)).toMatch(/invalid username/i);
+    });
+
+    it('should handle too non-numeric age', () => {
+        expect(validateUserInput('John', '20')).toMatch(/invalid age/i);
+    });
+
+    it('should handle age under the min age', () => {
+        const age = MIN_AGE - 1;
+        expect(validateUserInput('John', age)).toMatch(/invalid age/i);
+    });
+
+    it('should handle age over the max age', () => {
+        const age = MAX_AGE + 1;
+        expect(validateUserInput('John', age)).toMatch(/invalid age/i);
+    });
+
+    it('should succeed if given valid name and age', () => {
+        expect(validateUserInput('John', 20)).toMatch(/^|\bsuccess/i);
     });
 });
