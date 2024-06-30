@@ -8,6 +8,7 @@ import {
     MAX_AGE,
     isPriceInRange,
     isValidUsername,
+    canDrive,
 } from "../src/03.core";
 
 describe('getCoupons', () => {
@@ -175,4 +176,53 @@ describe('isValidUsername', () => {
         expect(isValidUsername(undefined)).toBe(false);
         expect(isValidUsername(12345)).toBe(false);
     });
+});
+
+describe('canDrive', () => {
+    // We don't want to replicate our production code in the tests:
+    // - more countries can be added
+    // const legalDrivingAge = {
+    //     US: 16,
+    //     UK: 17,
+    // };
+
+    // Positive testing
+    it('should return true if the age is avobe the US minimum', () => {
+        expect(canDrive(17, 'US')).toBe(true);
+    });
+
+    it('should return true if the age is avobe the UK minimum', () => {
+        expect(canDrive(18, 'UK')).toBe(true);
+    });
+
+    it('should return false if the age is below the US minimum', () => {
+        expect(canDrive(15, 'US')).toBe(false);
+    });
+
+    it('should return false if the age is below the UK minimum', () => {
+        expect(canDrive(16, 'UK')).toBe(false);
+    });
+
+    // Boundary testing
+    it('should return true if the age is equal to the US minimum', () => {
+        expect(canDrive(16, 'US')).toBe(true);
+    });
+
+    it('should return true if the age is equal to the UK minimum', () => {
+        expect(canDrive(17, 'UK')).toBe(true);
+    });
+
+    // Negative testing
+    it('should return error if missing country code', () => {
+        expect(canDrive(20)).toMatch(/invalid country code/i);
+    });
+
+    it('should return error when given invalid country code', () => {
+        expect(canDrive(20, 'FR')).toMatch(/invalid country code/i);
+    });
+    
+    // Avoid defensive programming
+    // it('should return false if wrong age data type', () => {
+    //     expect(canDrive(undefined, 'US')).toMatch(/invalid age/i);
+    // });
 });
