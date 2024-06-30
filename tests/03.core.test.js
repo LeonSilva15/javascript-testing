@@ -6,7 +6,8 @@ import {
     MIN_USERNAME_LENGTH,
     MIN_AGE,
     MAX_AGE,
-    isPriceInRange
+    isPriceInRange,
+    isValidUsername,
 } from "../src/03.core";
 
 describe('getCoupons', () => {
@@ -137,5 +138,41 @@ describe('isPriceInRange', () => {
 
     it('should return true when the price is within boundaries', () => {
         expect(isPriceInRange(50, 0, 100)).toBe(true);
+    });
+});
+
+describe('isValidUsername', () => {
+    const minLength = 5;
+    const maxLength = 15;
+
+    it('should return false if the username is too short', () => {
+        const userName = 'a'.repeat(minLength - 1);
+        expect(isValidUsername('ab')).toBe(false);
+    });
+
+    it('should return false if the username is too long', () => {
+        const userName = 'a'.repeat(maxLength + 1)
+        expect(isValidUsername(userName)).toBe(false);
+    });
+
+    it('should return true if the username is within the length constraint', () => {
+        const userName = 'a'.repeat( maxLength - minLength )
+        expect(isValidUsername(userName)).toBe(true);
+    });
+
+    // Test the boundaries
+    it('should return true if the username is at the min or max length', () => {
+        let userName = 'a'.repeat( minLength )
+        expect(isValidUsername(userName)).toBe(true);
+
+        userName = 'a'.repeat( maxLength )
+        expect(isValidUsername(userName)).toBe(true);
+    });
+
+    // Negative testing
+    it('should return false if given invalid values', () => {
+        expect(isValidUsername(null)).toBe(false);
+        expect(isValidUsername(undefined)).toBe(false);
+        expect(isValidUsername(12345)).toBe(false);
     });
 });
