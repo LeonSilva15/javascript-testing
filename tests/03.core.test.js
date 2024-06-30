@@ -5,7 +5,8 @@ import {
     validateUserInput,
     MIN_USERNAME_LENGTH,
     MIN_AGE,
-    MAX_AGE
+    MAX_AGE,
+    isPriceInRange
 } from "../src/03.core";
 
 describe('getCoupons', () => {
@@ -119,5 +120,22 @@ describe('validateUserInput', () => {
 
     it('should succeed if given valid name and age', () => {
         expect(validateUserInput('John', 20)).toMatch(/^|\bsuccess/i);
+    });
+});
+
+// Testing boundaries
+describe('isPriceInRange', () => {
+    it('should return false when the price is out the range', () => {
+        expect(isPriceInRange(-10, 0, 100)).toBe(false);
+        expect(isPriceInRange(110, 0, 100)).toBe(false);
+    });
+
+    it('should return true when the price is equal to the boundaries', () => {
+        expect(isPriceInRange(0, 0, 100)).toBe(true);
+        expect(isPriceInRange(100, 0, 100)).toBe(true);
+    });
+
+    it('should return true when the price is within boundaries', () => {
+        expect(isPriceInRange(50, 0, 100)).toBe(true);
     });
 });
