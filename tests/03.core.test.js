@@ -241,3 +241,15 @@ describe('canDrive - parameterized testing', () => {
         expect(canDrive(age, country)).toBe(result);
     });
 });
+
+describe('isPriceInRange - parameterized testing', () => {
+    it.each([
+        { scenario: 'price is below the range', price: -10, result: false },
+        { scenario: 'price is equal to the min', price: 0, result: true },
+        { scenario: 'price is within the range', price: 50, result: true },
+        { scenario: 'price is equal to the max', price: 100, result: true },
+        { scenario: 'price is avobe the range', price: 110, result: false }
+    ])('should return $result when $scenario', ({ price, result }) => {
+        expect(isPriceInRange(price, 0, 100)).toBe(result);
+    });
+});
