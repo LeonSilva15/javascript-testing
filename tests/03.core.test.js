@@ -10,6 +10,7 @@ import {
     isValidUsername,
     canDrive,
     fetchData,
+    failFetchData,
 } from "../src/03.core";
 
 describe('getCoupons', () => {
@@ -276,4 +277,15 @@ describe('fetchData', () => {
             expect(result.length).toBeGreaterThan(0);
         });
     });
+});
+
+describe('failFetchData', () => {
+    it('should handle the promise rejection', async() => {
+        try {
+            await failFetchData();
+        } catch (error) {
+            expect(error).toHaveProperty('reason');
+            expect(error.reason).toMatch(/fail/i);
+        }
+    })
 });
