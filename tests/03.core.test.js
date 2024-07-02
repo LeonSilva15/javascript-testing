@@ -9,6 +9,7 @@ import {
     isPriceInRange,
     isValidUsername,
     canDrive,
+    fetchData,
 } from "../src/03.core";
 
 describe('getCoupons', () => {
@@ -251,5 +252,28 @@ describe('isPriceInRange - parameterized testing', () => {
         { scenario: 'price is avobe the range', price: 110, result: false }
     ])('should return $result when $scenario', ({ price, result }) => {
         expect(isPriceInRange(price, 0, 100)).toBe(result);
+    });
+});
+
+// Testing Asynchrounous Code
+describe('fetchData', () => {
+    // if it was synchronous:
+    // it('should return an array of numbers', () => {
+    //     const result = fetchData();
+    //     expect(Array.isArray(result)).toBe(true);
+    //     expect(result.length).toBeGreaterThan(0);
+    // });
+
+    // as it is asynchronous:
+    it('should return a promise that resolves to an array of numbers', async () => {
+        const result = await fetchData();
+        expect(Array.isArray(result)).toBe(true);
+        expect(result.length).toBeGreaterThan(0);
+
+        // or
+        fetchData().then((result) => {
+            expect(Array.isArray(result)).toBe(true);
+            expect(result.length).toBeGreaterThan(0);
+        });
     });
 });
