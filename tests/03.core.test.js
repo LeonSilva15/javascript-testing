@@ -11,6 +11,7 @@ import {
     canDrive,
     fetchData,
     failFetchData,
+    Stack
 } from "../src/03.core";
 
 describe('getCoupons', () => {
@@ -307,4 +308,122 @@ describe('setup and teardown', () => {
 
     it('test case 1', () => {});
     it('test case 2', () => {});
+});
+
+describe('Stack', () => {
+    let stack;
+    beforeEach(() => {
+        stack = new Stack();
+    });
+
+    describe('push', () => {
+        it('should add an item', () => {
+            // Act
+            stack.push(1);
+            // Assert
+            expect(stack.items.length).toBe(1);
+            expect(stack.items[0]).toBe(1);
+        });
+    });
+
+    describe('pop', () => {
+        let poppedItem;
+
+        beforeEach(() => {
+            // Arrange
+            stack.push(1);
+            stack.push(2);
+    
+            // Act
+            poppedItem = stack.pop();
+        });
+
+        // Assert
+        it('should get the last item', () => {
+            expect(poppedItem).toBe(2);
+        });
+
+        it('should remove the last item from the array', () => {
+            expect(stack.items.length).toBe(1);
+        });
+
+        it('should throw an error if the stack is empty', () => {
+            // Arrange
+            stack.pop();
+
+            // Assert
+            expect(() => stack.pop()).toThrow(/empty/i);
+        });
+    });
+
+    describe('peek', () => {
+        let peekedItem;
+
+        beforeEach(() => {
+            // Arrange
+            stack.push(1);
+            stack.push(2);
+    
+            // Act
+            peekedItem = stack.peek();
+        });
+
+        // Assert
+        it('should get the last item', () => {
+            expect(peekedItem).toBe(2);
+        });
+
+        it('should not remove any item from the array', () => {
+            expect(stack.items.length).toBe(2);
+        });
+
+        it('should throw an error if the stack is empty', () => {
+            // Arrange
+            stack.pop();
+            stack.pop();
+
+            // Assert
+            expect(() => stack.peek()).toThrow(/empty/i);
+        });
+    });
+
+    describe('isEmpty', () => {
+        // Assert
+        it('should return true if the itmes list is empty', () => {
+            expect(stack.isEmpty()).toBe(true);
+        });
+
+        it('should return false if the itmes list is not empty', () => {
+            stack.push(1);
+            expect(stack.isEmpty()).toBe(false);
+        });
+    });
+
+    describe('size', () => {
+        it('should return 0 if the itmes list is empty', () => {
+            expect(stack.size()).toBe(0);
+        });
+
+        it('should return 3 if the itmes list is 3', () => {
+            stack.push(1);
+            stack.push(2);
+            stack.push(3);
+
+            expect(stack.size()).toBe(3);
+        });
+    });
+
+    describe('clear', () => {
+        it('should empty the list', () => {
+            // Arrange
+            stack.push(1);
+            stack.push(2);
+
+            // Act
+            stack.clear();
+
+            // Assert
+            expect(stack.isEmpty()).toBe(true);
+        });
+    });
 });
