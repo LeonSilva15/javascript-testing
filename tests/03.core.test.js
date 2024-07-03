@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeAll, beforeEach, afterEach, afterAll } from "vitest";
 import {
     getCoupons,
     calculateDiscount,
@@ -288,4 +288,23 @@ describe('failFetchData', () => {
             expect(error.reason).toMatch(/fail/i);
         }
     })
+});
+
+// Setup and Teardown
+describe('setup and teardown', () => {
+    beforeAll(() => {
+        console.log('beforeAll');
+    });
+    beforeEach(() => {
+        console.log('beforeEach');
+    });
+    afterEach(() => {
+        console.log('afterEach');
+    });
+    afterAll(() => {
+        console.log('afterAll');
+    });
+
+    it('test case 1', () => {});
+    it('test case 2', () => {});
 });
