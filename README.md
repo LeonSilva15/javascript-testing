@@ -11,31 +11,18 @@ Testing in software development is a crucial process aimed at ensuring the quali
     ```bash
     npm init
     ```
-2. Create your project
-    ```bash
-    npm create vite@latest
-    ```
-    For this project choose Vanilla
-3. Install the dependencies
-    ```bash
-    npm install
-    ```
-4. You can verify that everything is ok
-    ```bash
-    npm run dev
-    ```
-5. Install Vitest as a development dependency
+2. Install Vitest as a development dependency
     ```bash
     npm i -D vitest
     ```
-6. Add the test command to your package.json
+3. Add the test command to your package.json
     ```text
     scripts: {
         ...
         "test": "vitest"
     }
     ```
-7. Run your tests in watch mode
+4. Run your tests in watch mode
     ```bash
     npm run test
     ```
@@ -46,7 +33,7 @@ Testing in software development is a crucial process aimed at ensuring the quali
 ## Test UI
 1. Install @vitest/ui
     ```bash
-    npm install @vitest/ui
+    npm i -D @vitest/ui
     ```
 2. Add test:ui command to package.json
     ```text
@@ -77,7 +64,7 @@ Testing in software development is a crucial process aimed at ensuring the quali
     ```
 3. Re-run the command
     ```bash
-    npm run test:ui
+    npm run coverage
     ```
 4. Go to the generated `coverage` directory
 5. Open your `index.html` file (recommended extension - LiveServer)
