@@ -31,7 +31,7 @@ describe('test suite', () => {
         // Loose
         expect(myArr).toBeDefined();
         // Tight
-        expect(myArr).toBeDefined([1, 2, 3]);
+        expect(myArr).toEqual([1, 2, 3]);
         // Better
         expect(myArr).toEqual(expect.arrayContaining([1, 2, 3]));
         // Sometimes we need loose or tight tests
