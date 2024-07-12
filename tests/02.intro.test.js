@@ -14,7 +14,16 @@ describe('test suite', () => {
         expect(typeof obj.name).toBe('string');
     });
 
-    it('should avoid loose assertions', () => {
+    it('should handle Exceptions', () => {
+        const throwError = () => {
+            throw new Error('Something went wrong!');
+        }
+
+        // Expections require to be scoped in a function
+        expect(throwError).toThrowError('Something went wrong!');
+    });
+
+    it('should avoid loose and tight assertions', () => {
         const str = 'The requested file was not found.';
         // Loose assertion - Too general
         expect(str).toBeDefined(); // Easily true
@@ -39,4 +48,3 @@ describe('test suite', () => {
         expect(myArr.length).toBeGreaterThan(0);
     });
 });
-
