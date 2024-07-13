@@ -1,7 +1,15 @@
 import { describe, it, expect } from "vitest";
 
 describe('test suite', () => {
-    it('should compare objects', () => {
+    it('should handle equality', () => {
+        expect(1).toBe(1);
+        expect(1).toEqual(1);
+        const person = {name: 'John'};
+        // expect(person).toBe({name: 'John'});
+        expect(person).toEqual({name: 'John'});
+    });
+
+    it('should compare Objects', () => {
         const obj = { name: 'John', age: 25 };
         expect(obj).toEqual({ name: 'John', age: 25 });
         // When not having the same object (only less attributes)
