@@ -17,6 +17,14 @@ describe('test suite', () => {
         expect(null).toBeNull();
     });
 
+    it('should handle Numbers', () => {
+        expect(2).toBeGreaterThan(1);
+        expect(2).toBeGreaterThanOrEqual(2);
+        expect(1).toBeLessThan(2);
+        expect(2).toBeLessThanOrEqual(2);
+        expect(.999).toBeCloseTo(1);
+    });
+
     it('should compare Objects', () => {
         const obj = { name: 'John', age: 25 };
         expect(obj).toEqual({ name: 'John', age: 25 });
