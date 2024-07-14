@@ -9,6 +9,14 @@ describe('test suite', () => {
         expect(person).toEqual({name: 'John'});
     });
 
+    it('should handle Truthiness', () => {
+        expect(1).toBeTruthy();
+        expect(1).toBeDefined();
+        expect(0).toBeFalsy();
+        expect(undefined).toBeUndefined();
+        expect(null).toBeNull();
+    });
+
     it('should compare Objects', () => {
         const obj = { name: 'John', age: 25 };
         expect(obj).toEqual({ name: 'John', age: 25 });
