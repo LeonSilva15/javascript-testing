@@ -25,6 +25,11 @@ describe('test suite', () => {
         expect(.999).toBeCloseTo(1);
     });
 
+    it('should handle Strings', () => {
+        expect('Hello World').toMatch('Hello World');
+        expect('Hello World').toMatch(/hello world/i);
+    });
+
     it('should compare Objects', () => {
         const obj = { name: 'John', age: 25 };
         expect(obj).toEqual({ name: 'John', age: 25 });
