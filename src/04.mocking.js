@@ -1,6 +1,7 @@
 import { getExchangeRate } from './libs/currency';
 import { getShippingQuote } from './libs/shipping';
 import { trackPageView } from './libs/analytics';
+import { charge } from './libs/payment';
 
 /**
  * Get the new price in the specified currency
@@ -32,4 +33,18 @@ export async function renderPage() {
     trackPageView('/home');
 
     return '<div>content</div>';
+}
+
+/**
+ * Submit an order
+ * @param {Object} order
+ * @param {string} creditCard
+ * @returns whether the submission was successful or not
+ */
+export async function submitOrder(order, creditCard) {
+    const paymentResult = await charge(creditCard, order.totalAmount);
+
+    if (paymentResult.status === 'failed') { return { success: false, error: 'payment_error' }; }
+
+    return { success: true };
 }
