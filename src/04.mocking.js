@@ -2,6 +2,7 @@ import { getExchangeRate } from './libs/currency';
 import { getShippingQuote } from './libs/shipping';
 import { trackPageView } from './libs/analytics';
 import { charge } from './libs/payment';
+import { isValidEmail, sendEmail } from './libs/email';
 
 /**
  * Get the new price in the specified currency
@@ -47,4 +48,17 @@ export async function submitOrder(order, creditCard) {
     if (paymentResult.status === 'failed') { return { success: false, error: 'payment_error' }; }
 
     return { success: true };
+}
+
+/**
+ * Sign up action
+ * @param {string} email
+ * @returns wether the email is valid and therefore the action successful or not
+ */
+export async function signUp(email) {
+    if (!isValidEmail(email)) return false;
+
+    await sendEmail(email, 'Welcome aboard!');
+
+    return true;
 }
