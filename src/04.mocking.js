@@ -3,6 +3,7 @@ import { getShippingQuote } from './libs/shipping';
 import { trackPageView } from './libs/analytics';
 import { charge } from './libs/payment';
 import { isValidEmail, sendEmail } from './libs/email';
+import security from './libs/security';
 
 /**
  * Get the new price in the specified currency
@@ -61,4 +62,14 @@ export async function signUp(email) {
     await sendEmail(email, 'Welcome aboard!');
 
     return true;
+}
+
+/**
+ * Login action
+ * @param {string} email 
+ */
+export async function login(email) {
+    const code = security.generateCode();
+
+    await sendEmail(email, code.toString());
 }
