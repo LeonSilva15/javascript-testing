@@ -27,7 +27,10 @@ describe('test suite', () => {
 
     it('should handle Strings', () => {
         expect('Hello World').toMatch('Hello World');
+        // RegExp can be used
         expect('Hello World').toMatch(/hello world/i);
+        // Try to avoid them when possible
+        expect('Hello World'.toLowerCase()).toMatch('hello world');
     });
 
     it('should compare Objects', () => {
