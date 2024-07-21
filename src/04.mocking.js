@@ -73,3 +73,15 @@ export async function login(email) {
 
     await sendEmail(email, code.toString());
 }
+
+/**
+ * Get whether the service is available depending on the time
+ * @returns whether the service is available
+ */
+export function isOnline() {
+    const availableHours = [8, 20];
+    const [open, close] = availableHours;
+    const currentHour = new Date().getHours();
+
+    return currentHour >= open && currentHour < close;
+}
