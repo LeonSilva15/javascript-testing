@@ -1,4 +1,10 @@
 import { vi, it, expect, describe, beforeEach } from 'vitest'
+import {
+    getPriceInCurrency,
+    getShippingInfo,
+} from '../src/04.mocking';
+import { getExchangeRate } from '../src/libs/currency';
+import { getShippingQuote } from '../src/libs/shipping';
 
 // A Mock Function is a function that imitates the behavior of a real function
 // It's used to test in isolation
@@ -46,4 +52,34 @@ describe('Mock Functions', () => {
         expect(sendText).toHaveBeenCalledWith('message');
         expect(result).toBe('ok');
     })
+});
+
+// Mocking modules
+describe(getPriceInCurrency, () => {
+    it('should return price in target currency', () => {
+        vi.mocked(getExchangeRate).mockReturnValue(1.5);
+
+        const price = getPriceInCurrency(10, 'AUD');
+
+        expect(price).toBe(15);
+    });
+});
+
+describe(getShippingInfo, () => {
+    it('should handle unavailable fetch endpoint', () => {
+        vi.mocked(getShippingQuote).mockReturnValue(undefined);
+
+        const result = getShippingInfo('Random destination');
+
+        expect(result).toMatch(/unavailable/i);
+    });
+
+    it('should return the cost and days in the info after fetching the data', () => {
+        vi.mocked(getShippingQuote).mockReturnValue({ cost: 10, estimatedDays: 5 });
+
+        const result = getShippingInfo('Random destination');
+
+        expect(result).toMatch('$10');
+        expect(result.toLowerCase()).toMatch('(5 days)');
+    });
 });
