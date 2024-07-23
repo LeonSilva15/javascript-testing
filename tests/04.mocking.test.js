@@ -3,12 +3,14 @@ import {
     getPriceInCurrency,
     getShippingInfo,
     renderPage,
+    signUp,
     submitOrder
 } from '../src/04.mocking';
 import { getExchangeRate } from '../src/libs/currency';
 import { getShippingQuote } from '../src/libs/shipping';
 import { trackPageView } from '../src/libs/analytics';
 import { charge } from '../src/libs/payment';
+import { sendEmail } from '../src/libs/email';
 
 
 vi.mock('../src/libs/currency');
@@ -16,6 +18,17 @@ vi.mock('../src/libs/shipping');
 
 vi.mock('../src/libs/analytics');
 vi.mock('../src/libs/payment');
+
+// Partial Mocking
+// Only replace the sendEmail method
+// The rest of the methods are required since they are utilities
+vi.mock('../src/libs/email', async (getModules) => {
+    const modules = await getModules();
+    return {
+        ...modules,
+        sendEmail: vi.fn()
+    }
+});
 
 // A Mock Function is a function that imitates the behavior of a real function
 // It's used to test in isolation
@@ -146,5 +159,56 @@ describe(submitOrder, () => {
         expect(result).toMatchObject({success: false, error: 'payment_error'});
 
         expect(result.error.toLowerCase()).toMatch('payment');
+    });
+});
+
+// Partial Mocking
+describe(signUp, () => {
+    const email = 'name@domain.com';
+
+    // The suite will accumulate the mock methods unless cleared
+    // This is an option that can be set in the vitest.config.js
+    // mockClear   - clears all the info about calls
+    // mockReset   - same as mockClear but reimplements to an empty function
+    // mockRestore - same as mockClear but reimplements to the original function implementation
+    // beforeEach(() => {
+    //     vi.mocked(sendEmail).mockClear();
+
+        // If there are multiple mock implementations:
+        // vi.clearAllMocks();
+    // });
+
+    it('should return false if the email is not valid', async () => {
+        const result = await signUp('abc');
+
+        expect(result).toBe(false);
+    });
+
+    it('should return true if the email is valid', async () => {
+        const result = await signUp(email);
+
+        expect(result).toBe(true);
+    });
+
+    it('should send welcome message when the email is valid', async () => {
+        const result = await signUp(email);
+
+        // Regular expression won't work here:
+        // expect(sendEmail).toHaveBeenCalledWith(email, /welcome/i);
+        expect(sendEmail).toHaveBeenCalled();
+
+        // The suite will accumulate the mock methods unless cleared
+        expect(sendEmail).toHaveBeenCalledOnce();
+
+        // Access the information of the acion in the mock function
+        const args = vi.mocked(sendEmail).mock.calls[0];
+        console.log('sendEmail first call args:', args);
+
+        // This is too attached to the implementation, this should be avoided
+        // Mocking should be used only on external dependencies
+        expect(args[0]).toBe(email);
+        expect(args[1]).toMatch(/welcome/i);
+        // or
+        expect(args[1].toLowerCase().includes('welcome')).toBe(true);
     });
 });
