@@ -2,6 +2,7 @@ import { vi, it, expect, describe, beforeEach } from 'vitest'
 import {
     getPriceInCurrency,
     getShippingInfo,
+    login,
     renderPage,
     signUp,
     submitOrder
@@ -11,6 +12,7 @@ import { getShippingQuote } from '../src/libs/shipping';
 import { trackPageView } from '../src/libs/analytics';
 import { charge } from '../src/libs/payment';
 import { sendEmail } from '../src/libs/email';
+import security from '../src/libs/security';
 
 
 vi.mock('../src/libs/currency');
@@ -210,5 +212,21 @@ describe(signUp, () => {
         expect(args[1]).toMatch(/welcome/i);
         // or
         expect(args[1].toLowerCase().includes('welcome')).toBe(true);
+    });
+});
+
+// Spying on functions allow us to monitor the behavior of functions
+describe(login, () => {
+    const email = 'name@domain.com';
+    it('should email the one-time login code', async () => {
+        const spy = vi.spyOn(security, 'generateCode');
+
+        await login(email);
+
+        // spy allows to use mock methods on the spied method
+        // spy.mockImplementation
+        const securityCode = spy.mock.results[0].value.toString();
+
+        expect(sendEmail).toHaveBeenCalledWith(email, securityCode);
     });
 });
