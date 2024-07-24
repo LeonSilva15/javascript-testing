@@ -1,7 +1,9 @@
 import { vi, it, expect, describe, beforeEach } from 'vitest'
 import {
+    getDiscount,
     getPriceInCurrency,
     getShippingInfo,
+    isOnline,
     login,
     renderPage,
     signUp,
@@ -228,5 +230,46 @@ describe(login, () => {
         const securityCode = spy.mock.results[0].value.toString();
 
         expect(sendEmail).toHaveBeenCalledWith(email, securityCode);
+    });
+});
+
+// Mocking dates
+describe(isOnline, () => {
+    it('should return false if current hour is outside working hours', () => {
+        vi.setSystemTime('2024-01-01 07:59');
+        expect(isOnline()).toBe(false);
+        
+        vi.setSystemTime('2024-01-01 20:01');
+        expect(isOnline()).toBe(false);
+
+    });
+
+    it('should return true if current hour is within working hours', () => {
+        vi.setSystemTime('2024-01-01 08:00');
+        expect(isOnline()).toBe(true);
+
+        vi.setSystemTime('2024-01-01 19:59');
+        expect(isOnline()).toBe(true);
+    });
+});
+
+describe(getDiscount, () => {
+    it('should return 0 if current date is not christmas', () => {
+        vi.setSystemTime('2024-06-25 12:00');
+        expect(getDiscount()).toBe(0);
+
+        vi.setSystemTime('2024-12-24 23:59');
+        expect(getDiscount()).toBe(0);
+
+        vi.setSystemTime('2024-12-26 00:00');
+        expect(getDiscount()).toBe(0);
+    });
+
+    it('should return 0 if current date is not christmas', () => {
+        vi.setSystemTime('2024-12-25 00:00');
+        expect(getDiscount()).toBe(.2);
+
+        vi.setSystemTime('2024-12-25 23:59');
+        expect(getDiscount()).toBe(.2);
     });
 });
