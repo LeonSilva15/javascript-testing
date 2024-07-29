@@ -1,4 +1,4 @@
-import { vi, it, expect, describe, beforeEach } from 'vitest'
+import { vi, it, expect, describe } from 'vitest'
 import {
     getDiscount,
     getPriceInCurrency,
@@ -195,7 +195,7 @@ describe(signUp, () => {
     });
 
     it('should send welcome message when the email is valid', async () => {
-        const result = await signUp(email);
+        await signUp(email);
 
         // Regular expression won't work here:
         // expect(sendEmail).toHaveBeenCalledWith(email, /welcome/i);

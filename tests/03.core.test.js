@@ -151,7 +151,7 @@ describe('isValidUsername', () => {
 
     it('should return false if the username is too short', () => {
         const userName = 'a'.repeat(minLength - 1);
-        expect(isValidUsername('ab')).toBe(false);
+        expect(isValidUsername(userName)).toBe(false);
     });
 
     it('should return false if the username is too long', () => {
